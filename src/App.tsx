@@ -3,7 +3,6 @@ import {
   ChakraProvider,
   theme,
 } from "@chakra-ui/react"
-import { ColorModeSwitcher } from "./ColorModeSwitcher"
 import Routes from "./routes"
 import { Provider } from "react-redux"
 import { store } from "./redux-store"
