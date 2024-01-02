@@ -1,59 +1,61 @@
 import { Alert, Button, Image, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useSubjectsQuery } from "../redux-store/api/components/courses";
+import { useChaptersQuery } from "../redux-store/api/components/courses";
 
-const Courses = () => {
-  const { courseId } = useParams();
+const Chapters = () => {
+  const { subjectId } = useParams();
 
   const location = useLocation();
 
   const navigate = useNavigate();
 
-  const courseName = location.state.courseName;
+  const subjectName = location.state.subjectName;
 
   const {
-    data: subjects,
+    data: chapters,
     isLoading,
     isError,
-  } = useSubjectsQuery({ courseId: courseId! }, { skip: !courseId });
+  } = useChaptersQuery({ subjectId: subjectId! }, { skip: !subjectId });
 
   if (isLoading) return <Text>Loading...</Text>;
 
   if (isError) return <Alert status="error">Error loading subjects</Alert>;
 
   return (
-    <Stack gap="2em">
+    <Stack gap="2em" padding="2em 0">
       <Text fontSize="1.5rem" fontWeight={700}>
-        {courseName}
+        {subjectName}
       </Text>
       <Stack
-        direction={{ base: "column", lg: "row" }}
+        direction={{ base: "column", md: "column", lg: "row" }}
         flexWrap="wrap"
-        gap="2em"
+        gap="1em"
       >
-        {subjects!.data.map((subject) => (
+        {chapters!.data.map((chapter) => (
           <Stack
+            key={`subject-${subjectId}-chapter-${chapter.id}`}
             direction="row"
             gap="0.75em"
-            key={`course-${courseId}-subject-${subject.id}`}
+            border="1px solid #d3d3d3"
+            padding="1em"
           >
-            <Image width="50px" height="50px" src={subject.image_url} />
+            <Image width="50px" height="50px" src={chapter.image_url} />
             <Stack alignItems="baseline">
               <Text fontSize="1.25rem" fontWeight={700}>
-                {subject.name}
+                {chapter.name}
               </Text>
               <Button
                 variant="link"
                 size="sm"
                 colorScheme="red"
                 onClick={() =>
-                  navigate(`/subjects/${subject.id}/chapters`, {
-                    state: { subjectName: subject.name },
+                  navigate(`/chapters/${chapter.id}/topics`, {
+                    state: { chapterName: chapter.name },
                   })
                 }
               >
-                View Chapters
+                View Topic
               </Button>
             </Stack>
           </Stack>
@@ -63,4 +65,4 @@ const Courses = () => {
   );
 };
 
-export default Courses;
+export default Chapters;

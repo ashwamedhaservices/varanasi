@@ -1,52 +1,101 @@
-import React from 'react';
-import { Box, Button, Stack, Text } from '@chakra-ui/react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Logo } from '../../Logo';
-import { setAccessToken } from '../../utils/auth';
-import { useDispatch } from 'react-redux';
-import { resetAuth } from '../../redux-store/auth';
+import React from "react";
+import {
+  Avatar,
+  Box,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
+import { Link, useNavigate } from "react-router-dom";
+import { Logo } from "../../Logo";
+import { setAccessToken } from "../../utils/auth";
+import { useDispatch } from "react-redux";
+import { resetAuth } from "../../redux-store/auth";
+import { useProfileDashboardQuery } from "../../redux-store/api";
 
 type MenuItemProps = {
-    isLast?: boolean;
-    to: string;
-}
+  isLast?: boolean;
+  to: string;
+};
 
-const MenuItem: React.FC<React.PropsWithChildren<MenuItemProps>> = ({ children, isLast, to = "/", ...rest }) => {
-    return (
-      <Link to={to}>
-        <Text display="block" {...rest}>
-          {children}
-        </Text>
-      </Link>
-    )
-  }
-  
+const NavItem: React.FC<React.PropsWithChildren<MenuItemProps>> = ({
+  children,
+  isLast,
+  to = "/",
+  ...rest
+}) => {
+  return (
+    <Link to={to}>
+      <Text display="block" {...rest}>
+        {children}
+      </Text>
+    </Link>
+  );
+};
 
 const Header = () => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
+  const { data: profileDashboard } = useProfileDashboardQuery();
+
   const handleLogout = () => {
-    setAccessToken('');
+    setAccessToken("");
     dispatch(resetAuth());
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
-      <Box display='flex' justifyContent='space-between' width='100%' alignItems='center'>
-          <Stack direction='row' gap='1em' alignItems='center'>
-            <Box width='50px' height='50px'><Logo /></Box>
-            <Text fontSize='1.5rem' fontWeight='700'>Ashwamedha</Text>
-          </Stack>
+    <Box
+      display="flex"
+      justifyContent="space-between"
+      width="100%"
+      alignItems="center"
+      padding="1em"
+      bgColor="blue.700"
+      boxShadow="rgba(0, 0, 0, 0.15) 0px 2px 8px"
+      borderRadius="0 0 2em 2em"
+    >
+      <Stack direction="row" gap="1em" alignItems="center">
+        <Box width="50px" height="50px">
+          <Logo />
+        </Box>
+        <Text fontSize="1.5rem" fontWeight="700" color="white">
+          Ashwamedha
+        </Text>
+      </Stack>
 
-          <Stack spacing={8} alignItems="center" justify={["center", "space-between", "flex-end", "flex-end"]} direction={["column", "row", "row", "row"]} pt={[4, 4, 0, 0]}>
-              <MenuItem to='/'>Home</MenuItem>
-              <MenuItem to='/courses'>Courses</MenuItem>
-              <Button onClick={handleLogout}>Logout</Button>
-          </Stack>
-      </Box>
-  )
+      <Stack
+        spacing={8}
+        alignItems="center"
+        justify={["center", "space-between", "flex-end", "flex-end"]}
+        direction={["column", "row", "row", "row"]}
+        pt={[4, 4, 0, 0]}
+      >
+        <Menu>
+          <MenuButton color="white">
+            <Stack direction="row" gap="0.5em" alignItems="center">
+              <Avatar size="lg" bg="yellow.400" />
+              <Stack>
+                <Text fontWeight={700} fontSize="1.25rem">
+                  Hey {profileDashboard?.data?.user?.full_name}
+                </Text>
+                <Text fontSize="0.875rem">Your way to grow</Text>
+              </Stack>
+            </Stack>
+          </MenuButton>
+          <MenuList>
+            <MenuItem onClick={() => navigate("/profile")}>Profile</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          </MenuList>
+        </Menu>
+      </Stack>
+    </Box>
+  );
 };
 
 export default Header;
