@@ -1,3 +1,5 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Image,
@@ -9,9 +11,18 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
 
 const CategoryItems = ({ data }: { data: any[] }) => {
+  const navigate = useNavigate();
+
+  const handleClick = (id: number, name: string) => {
+    navigate(`/courses/${id}`, {
+      state: {
+        courseName: name,
+      },
+    });
+  };
+
   return (
     <Stack direction="row" gap="1em">
       {data.map((item) => (
@@ -21,13 +32,14 @@ const CategoryItems = ({ data }: { data: any[] }) => {
           borderRadius="1em"
           minWidth="fit-content"
         >
-          <Stack direction="row" gap="0.5em" alignItems="center">
-            <Image
-              src={item.image_url}
-              alt={item.name}
-              height="50px"
-              width="60px"
-            />
+          <Stack
+            direction="row"
+            gap="0.5em"
+            alignItems="center"
+            cursor="pointer"
+            onClick={() => handleClick(item.id, item.name)}
+          >
+            <Image src={item.image_url} height="50px" width="60px" />
             <Box whiteSpace="nowrap">{item.name}</Box>
           </Stack>
         </Box>
