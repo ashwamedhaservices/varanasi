@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { selectIsLoggedIn } from "./redux-store/auth";
 import AuthLayout from "./components/layouts/AuthLayout";
 import Login from "./pages/Login";
-
+import Profile from "./components/profile/Profile";
 const Home = lazy(() => import("./pages/Home"));
 const Courses = lazy(() => import("./pages/Courses"));
 const Chapters = lazy(() => import("./pages/Chapters"));
@@ -31,6 +31,10 @@ const routes = [
       {
         path: "/chapters/:chapterId/topics",
         element: <Topics />,
+      },
+      {
+        path: "/profile",  
+        element: <Profile />,
       },
     ],
   },

@@ -15,7 +15,6 @@ import { setAccessToken } from "../../utils/auth";
 import { useDispatch } from "react-redux";
 import { resetAuth } from "../../redux-store/auth";
 import { useProfileDashboardQuery } from "../../redux-store/api";
-
 type MenuItemProps = {
   isLast?: boolean;
   to: string;
