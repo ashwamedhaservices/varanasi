@@ -5,6 +5,8 @@ import AuthLayout from "./components/layouts/AuthLayout";
 import Login from "./pages/Login";
 import Payment from "./pages/Payment";
 import PaymentStatus from "./pages/PaymentStatus";
+import ProfilePage from "./components/profile/ProfilePage";
+import Profile from "./components/profile/Profile";
 
 const Home = lazy(() => import("./pages/Home"));
 const Courses = lazy(() => import("./pages/Courses"));
@@ -34,7 +36,7 @@ const routes = [
       },
       {
         path: "/profile",
-        element: <Payment />,
+        element: <Profile />,
       },
       {
         path: "/subscribe",
