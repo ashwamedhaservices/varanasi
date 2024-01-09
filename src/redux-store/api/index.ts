@@ -4,7 +4,9 @@ import { Console } from "console";
 
 export const apiSlice = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://apistage.ashwamedha.net" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://apistage.ashwamedha.net/staging",
+  }),
   endpoints: (build) => ({
     login: build.mutation({
       query: (payload) => ({

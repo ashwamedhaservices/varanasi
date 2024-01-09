@@ -1,11 +1,11 @@
 import React, { lazy } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import GeneralLayout from "./components/layouts/GeneralLayout";
-import { useSelector } from "react-redux";
-import { selectIsLoggedIn } from "./redux-store/auth";
 import AuthLayout from "./components/layouts/AuthLayout";
 import Login from "./pages/Login";
-import Profile from "./components/profile/Profile";
+import Payment from "./pages/Payment";
+import PaymentStatus from "./pages/PaymentStatus";
+
 const Home = lazy(() => import("./pages/Home"));
 const Courses = lazy(() => import("./pages/Courses"));
 const Chapters = lazy(() => import("./pages/Chapters"));
@@ -33,8 +33,16 @@ const routes = [
         element: <Topics />,
       },
       {
-        path: "/profile",  
-        element: <Profile />,
+        path: "/profile",
+        element: <Payment />,
+      },
+      {
+        path: "/subscribe",
+        element: <Payment />,
+      },
+      {
+        path: "/hdfc_payment_status",
+        element: <PaymentStatus />,
       },
     ],
   },
@@ -51,8 +59,6 @@ const routes = [
 ];
 
 const Routes = () => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-
   const router = createBrowserRouter(routes);
 
   return <RouterProvider router={router} />;

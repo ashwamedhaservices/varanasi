@@ -15,7 +15,7 @@ import { setAccessToken } from "../../utils/auth";
 import { useDispatch } from "react-redux";
 import { resetAuth } from "../../redux-store/auth";
 import { useProfileDashboardQuery } from "../../redux-store/api";
-import Profile from "../profile/Profile"; 
+import Profile from "../profile/Profile";
 
 type MenuItemProps = {
   isLast?: boolean;
@@ -104,7 +104,7 @@ const Header: React.FC = () => {
         </Box>
       )}
 
-      {isProfileVisible && <Profile />} 
+      {isProfileVisible && <Profile />}
     </>
   );
 };
