@@ -9,10 +9,10 @@ import {
   AccordionPanel,
   AccordionItem,
   Icon,
-  
 } from "@chakra-ui/react";
 import { PlusSquareIcon } from "@chakra-ui/icons";
 import { useProfileDashboardQuery } from "../../redux-store/api";
+import Payment from "../../pages/Payment";
 function Wallet() {
   const { data: profileDashboard } = useProfileDashboardQuery();
 
@@ -62,34 +62,8 @@ function Wallet() {
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
-        <Flex
-          flexDirection="column"
-          alignItems="center"
-          justifyContent="center"
-          mb="4"
-        >
-          <Button
-            backgroundColor="#769cf4"
-            marginTop="30"
-            color="white"
-            size="lg"
-            borderRadius="15"
-          >
-            Pay Now
-          </Button>
-        </Flex>
+        <Payment />
       </Box>
-      <Text
-        bgColor="#d6c6f9"
-        p="4"
-        color="#000"
-        marginTop="-4"
-        textAlign="center"
-        borderRadius="5"
-      >
-        Account subscription pending
-      </Text>
-      
     </>
   );
 }
