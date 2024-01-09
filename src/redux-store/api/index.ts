@@ -4,7 +4,7 @@ import { getAccessToken } from "../../utils/auth";
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://apistage.ashwamedha.net",
+    baseUrl: "https://apistage.ashwamedha.net/staging",
   }),
   endpoints: (build) => ({
     login: build.mutation({
@@ -14,7 +14,7 @@ export const apiSlice = createApi({
         body: payload,
       }),
     }),
-    profileDashboard: build.query<any, void>({
+    profileDashboard: build.query<any, void | null>({
       query: () => ({
         url: "/api/v1/profiles/dashboard.json",
         headers: {

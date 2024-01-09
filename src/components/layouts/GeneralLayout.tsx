@@ -1,24 +1,27 @@
 import { Box } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import Header from "../global/Header";
-import Footer from "../global/Footer";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useProfileDashboardQuery } from "../../redux-store/api";
 import { getAccessToken, setAccessToken } from "../../utils/auth";
-import { useDispatch } from "react-redux";
-import { setAuth } from "../../redux-store/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { selectIsLoggedIn, setAuth } from "../../redux-store/auth";
 
 const GeneralLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
   const {
     data: profileDashboard,
     isLoading,
     isError,
     isSuccess,
-  } = useProfileDashboardQuery();
+  } = useProfileDashboardQuery(null, {
+    skip: !getAccessToken(),
+  });
 
   useEffect(() => {
     if (!isLoading && !isError && isSuccess && profileDashboard) {
@@ -31,7 +34,7 @@ const GeneralLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
       );
     }
 
-    if (isError) {
+    if (!isLoading && (isError || !isLoggedIn)) {
       setAccessToken("");
       dispatch(
         setAuth({

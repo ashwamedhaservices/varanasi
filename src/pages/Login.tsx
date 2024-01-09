@@ -4,7 +4,7 @@ import { Logo } from "../Logo";
 import { setAccessToken } from "../utils/auth";
 import { useLoginMutation } from "../redux-store/api";
 import { useDispatch } from "react-redux";
-import { setLoggedIn, setAccessToken as setToken } from "../redux-store/auth";
+import { setLoggedIn } from "../redux-store/auth";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -33,11 +33,8 @@ const Login = () => {
 
       if ("error" in res) throw res.error;
 
-      console.debug(res.data);
-
       setAccessToken(res.data.data.attributes.token);
       dispatch(setLoggedIn(true));
-      dispatch(setToken(res.data.data.attributes.token));
     } catch (error) {
       console.debug(error);
     }

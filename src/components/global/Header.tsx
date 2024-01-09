@@ -13,7 +13,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { Logo } from "../../Logo";
 import { setAccessToken } from "../../utils/auth";
 import { useDispatch } from "react-redux";
-import { resetAuth } from "../../redux-store/auth";
+import {
+  setAccessToken as setToken,
+  setLoggedIn,
+} from "../../redux-store/auth";
 import { useProfileDashboardQuery } from "../../redux-store/api";
 
 type MenuItemProps = {
@@ -44,8 +47,8 @@ const Header: React.FC = () => {
 
   const handleLogout = () => {
     setAccessToken("");
-    dispatch(resetAuth());
-    navigate("/login");
+    dispatch(setLoggedIn(false));
+    dispatch(setToken(""));
   };
 
   const handleProfileClick = () => {

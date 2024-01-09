@@ -5,10 +5,9 @@ import AuthLayout from "./components/layouts/AuthLayout";
 import Login from "./pages/Login";
 import Payment from "./pages/Payment";
 import PaymentStatus from "./pages/PaymentStatus";
-import ProfilePage from "./components/profile/ProfilePage";
-import Profile from "./components/profile/Profile";
 
 const Home = lazy(() => import("./pages/Home"));
+const Profile = lazy(() => import("./components/profile/Profile"));
 const Courses = lazy(() => import("./pages/Courses"));
 const Chapters = lazy(() => import("./pages/Chapters"));
 const Topics = lazy(() => import("./pages/Topics"));
