@@ -12,10 +12,11 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { Logo } from "../../Logo";
 import { setAccessToken } from "../../utils/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setAccessToken as setToken,
   setLoggedIn,
+  selectIsLoggedIn,
 } from "../../redux-store/auth";
 import { useProfileDashboardQuery } from "../../redux-store/api";
 
@@ -43,7 +44,11 @@ const Header: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { data: profileDashboard } = useProfileDashboardQuery();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
+  const { data: profileDashboard } = useProfileDashboardQuery(null, {
+    skip: !isLoggedIn,
+  });
 
   const handleLogout = () => {
     setAccessToken("");
@@ -53,6 +58,14 @@ const Header: React.FC = () => {
 
   const handleProfileClick = () => {
     navigate("/profile");
+  };
+
+  const handleDashboardClick = () => {
+    navigate("/dashboard");
+  };
+
+  const handleLoginClick = () => {
+    navigate("/login");
   };
 
   return (
@@ -82,23 +95,49 @@ const Header: React.FC = () => {
         direction={["column", "row", "row", "row"]}
         pt={[4, 4, 0, 0]}
       >
-        <Menu>
-          <MenuButton color="white">
-            <Stack direction="row" gap="0.5em" alignItems="center">
-              <Avatar size="lg" bg="yellow.400" />
-              <Stack>
+        {!isLoggedIn && (
+          <Menu>
+            <MenuButton color="white" onClick={handleLoginClick}>
+              <Text fontWeight={700} fontSize="1.25rem">
+                Login
+              </Text>
+            </MenuButton>
+          </Menu>
+        )}
+
+        {isLoggedIn && (
+          <>
+            <Menu>
+              <MenuButton color="white" onClick={handleDashboardClick}>
                 <Text fontWeight={700} fontSize="1.25rem">
-                  Hey {profileDashboard?.data?.user?.full_name}
+                  Continue Learning
                 </Text>
-                <Text fontSize="0.875rem">Your way to grow</Text>
-              </Stack>
-            </Stack>
-          </MenuButton>
-          <MenuList>
-            <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-          </MenuList>
-        </Menu>
+              </MenuButton>
+            </Menu>
+            <Menu>
+              <MenuButton color="white">
+                <Stack direction="row" gap="0.5em" alignItems="center">
+                  <Avatar size="md" bg="yellow.400" />
+                  <Text
+                    fontWeight={700}
+                    fontSize="1.25rem"
+                    maxWidth="150px"
+                    overflow="hidden"
+                    textOverflow="ellipsis"
+                    whiteSpace="nowrap"
+                  >
+                    Hey {profileDashboard?.data?.user?.full_name}
+                  </Text>
+                </Stack>
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={handleDashboardClick}>Dashboard</MenuItem>
+                <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              </MenuList>
+            </Menu>
+          </>
+        )}
       </Stack>
     </Box>
   );

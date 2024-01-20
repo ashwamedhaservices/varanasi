@@ -5,9 +5,12 @@ import { setAccessToken } from "../utils/auth";
 import { useLoginMutation } from "../redux-store/api";
 import { useDispatch } from "react-redux";
 import { setLoggedIn } from "../redux-store/auth";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -35,6 +38,7 @@ const Login = () => {
 
       setAccessToken(res.data.data.attributes.token);
       dispatch(setLoggedIn(true));
+      navigate("/dashboard");
     } catch (error) {
       console.debug(error);
     }
