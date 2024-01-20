@@ -7,7 +7,14 @@ import { getAccessToken, setAccessToken } from "../../utils/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsLoggedIn, setAuth } from "../../redux-store/auth";
 
-const GeneralLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
+type ComponentProps = {
+  isPrivate?: boolean;
+};
+
+const GeneralLayout: React.FC<React.PropsWithChildren<ComponentProps>> = ({
+  isPrivate,
+  children,
+}) => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -43,7 +50,8 @@ const GeneralLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
           redirectPath: window.location.pathname,
         })
       );
-      navigate("/login");
+
+      if (isPrivate) navigate("/login");
     }
   }, [isLoading, isError, isSuccess, profileDashboard]);
 
@@ -53,7 +61,7 @@ const GeneralLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
     <Box width="100%" maxWidth="1104px" margin="auto" height="100%">
       <Header />
       <React.Suspense fallback="Loading...">
-        <Box padding={{ base: "1.5em", lg: "1em" }}>
+        <Box>
           {children}
           <Outlet />
         </Box>

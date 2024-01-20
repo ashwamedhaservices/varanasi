@@ -7,6 +7,7 @@ import Payment from "./pages/Payment";
 import PaymentStatus from "./pages/PaymentStatus";
 
 const Home = lazy(() => import("./pages/Home"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Profile = lazy(() => import("./components/profile/Profile"));
 const Courses = lazy(() => import("./pages/Courses"));
 const Chapters = lazy(() => import("./pages/Chapters"));
@@ -15,11 +16,21 @@ const Topics = lazy(() => import("./pages/Topics"));
 const routes = [
   {
     path: "/",
-    element: <GeneralLayout />,
+    element: <GeneralLayout isPrivate={false} />,
     children: [
       {
         path: "/",
         element: <Home />,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <GeneralLayout isPrivate={true} />,
+    children: [
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
       },
       {
         path: "/courses/:courseId",
