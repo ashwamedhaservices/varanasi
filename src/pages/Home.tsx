@@ -20,7 +20,7 @@ const Home = () => {
         background="linear-gradient(180deg,#7B6FF2 0%,#7B6FF2 15%,rgba(132,117,236,0.71) 45%,#7B6FF2 75%,rgba(132,117,236,0.71) 100%)"
       >
         <Stack direction="column" justifyContent="center" width="50%">
-          <Text fontSize="1.5rem" color="#7B6FF2" fontWeight={700}>
+          <Text fontSize="2.5rem" color="#fff" fontWeight={700}>
             Learn, earn & refer
           </Text>
           <Text fontSize="1.5rem" color="white">

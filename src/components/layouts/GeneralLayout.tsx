@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import Header from "../global/Header";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import { useProfileDashboardQuery } from "../../redux-store/api";
 import { getAccessToken, setAccessToken } from "../../utils/auth";
 import { useDispatch, useSelector } from "react-redux";
@@ -56,6 +56,8 @@ const GeneralLayout: React.FC<React.PropsWithChildren<ComponentProps>> = ({
   }, [isLoading, isError, isSuccess, profileDashboard]);
 
   if (isLoading) return <div>Loading...</div>;
+
+  if (!getAccessToken() && isPrivate) return <Navigate to="/login" />;
 
   return (
     <Box width="100%" maxWidth="1104px" margin="auto" height="100%">
