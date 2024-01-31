@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getAccessToken } from "../../utils/auth";
-import { Console } from "console";
 
 export const apiSlice = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://apistage.ashwamedha.net" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://apistage.ashwamedha.net/staging",
+  }),
   endpoints: (build) => ({
     login: build.mutation({
       query: (payload) => ({
@@ -13,12 +14,11 @@ export const apiSlice = createApi({
         body: payload,
       }),
     }),
-    profileDashboard: build.query<any, void>({
+    profileDashboard: build.query<any, void | null>({
       query: () => ({
         url: "/api/v1/profiles/dashboard.json",
         headers: {
           Authorization: getAccessToken() || "",
-          
         },
       }),
     }),

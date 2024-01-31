@@ -1,12 +1,15 @@
 import React, { lazy } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import GeneralLayout from "./components/layouts/GeneralLayout";
-import { useSelector } from "react-redux";
-import { selectIsLoggedIn } from "./redux-store/auth";
 import AuthLayout from "./components/layouts/AuthLayout";
 import Login from "./pages/Login";
-import Profile from "./components/profile/Profile";
+import Payment from "./pages/Payment";
+import PaymentStatus from "./pages/PaymentStatus";
+import Privacy from "./pages/Privacy";
+
 const Home = lazy(() => import("./pages/Home"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Profile = lazy(() => import("./components/profile/Profile"));
 const Courses = lazy(() => import("./pages/Courses"));
 const Chapters = lazy(() => import("./pages/Chapters"));
 const Topics = lazy(() => import("./pages/Topics"));
@@ -14,11 +17,21 @@ const Topics = lazy(() => import("./pages/Topics"));
 const routes = [
   {
     path: "/",
-    element: <GeneralLayout />,
+    element: <GeneralLayout isPrivate={false} />,
     children: [
       {
         path: "/",
         element: <Home />,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <GeneralLayout isPrivate={true} />,
+    children: [
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
       },
       {
         path: "/courses/:courseId",
@@ -33,8 +46,16 @@ const routes = [
         element: <Topics />,
       },
       {
-        path: "/profile",  
+        path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/subscribe",
+        element: <Payment />,
+      },
+      {
+        path: "/hdfc_payment_status",
+        element: <PaymentStatus />,
       },
     ],
   },
@@ -48,11 +69,13 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/privacy",
+    element: <Privacy />,
+  },
 ];
 
 const Routes = () => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-
   const router = createBrowserRouter(routes);
 
   return <RouterProvider router={router} />;
