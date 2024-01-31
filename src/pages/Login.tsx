@@ -38,6 +38,8 @@ const Login = () => {
 
       setAccessToken(res.data.data.attributes.token);
       dispatch(setLoggedIn(true));
+      console.log("navigating to dashboard");
+      
       navigate("/dashboard");
     } catch (error) {
       console.debug(error);

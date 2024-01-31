@@ -19,6 +19,7 @@ import {
   selectIsLoggedIn,
 } from "../../redux-store/auth";
 import { useProfileDashboardQuery } from "../../redux-store/api";
+import { FiUser } from "react-icons/fi";
 
 type MenuItemProps = {
   isLast?: boolean;
@@ -77,7 +78,7 @@ const Header: React.FC = () => {
       padding="1em"
       bgColor="blue.700"
       boxShadow="rgba(0, 0, 0, 0.15) 0px 2px 8px"
-      borderRadius="0 0 2em 2em"
+      // borderRadius="0 0 2em 2em"
     >
       <Stack direction="row" gap="1em" alignItems="center">
         <Box width="50px" height="50px">
@@ -118,7 +119,7 @@ const Header: React.FC = () => {
               <MenuButton color="white">
                 <Stack direction="row" gap="0.5em" alignItems="center">
                   <Avatar size="md" bg="yellow.400" />
-                  <Text
+                  {/* <Text
                     fontWeight={700}
                     fontSize="1.25rem"
                     maxWidth="150px"
@@ -127,10 +128,13 @@ const Header: React.FC = () => {
                     whiteSpace="nowrap"
                   >
                     Hey {profileDashboard?.data?.user?.full_name}
-                  </Text>
+                  </Text> */}
                 </Stack>
               </MenuButton>
               <MenuList>
+                <MenuItem>
+                {profileDashboard?.data?.user?.full_name}
+                </MenuItem>
                 <MenuItem onClick={handleDashboardClick}>Dashboard</MenuItem>
                 <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
