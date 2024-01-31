@@ -4,7 +4,7 @@ import { getAccessToken } from "../../utils/auth";
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://apistage.ashwamedha.net/staging",
+    baseUrl: "https://apistage.ashwamedha.net",
   }),
   endpoints: (build) => ({
     login: build.mutation({
