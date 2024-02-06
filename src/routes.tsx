@@ -13,6 +13,7 @@ const Profile = lazy(() => import("./components/profile/Profile"));
 const Courses = lazy(() => import("./pages/Courses"));
 const Chapters = lazy(() => import("./pages/Chapters"));
 const Topics = lazy(() => import("./pages/Topics"));
+const Quiz = lazy(() => import("./pages/Quiz"));
 
 const routes = [
   {
@@ -22,6 +23,10 @@ const routes = [
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/quiz",
+        element: <Quiz />,
       },
     ],
   },
